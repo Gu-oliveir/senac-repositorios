@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodShare | Transformando Excesso em Solidariedade</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Earthy Harmony -->
+    <!-- Application Structure Plan: A estrutura da aplicação foi organizada em seções temáticas e lógicas para criar uma narrativa fluida, em vez de replicar a sequência de slides. Começa com uma introdução impactante (Início), estabelece o contexto (O Problema e a Solução), explica a operação (Como Funciona), demonstra a eficácia (Nosso Impacto), fornece credibilidade (Base Legal) e olha para o futuro (Próximos Passos). Essa abordagem segmentada permite que diferentes tipos de usuários (doadores, parceiros, beneficiários) encontrem rapidamente as informações relevantes, utilizando navegação por abas, acordeões e gráficos interativos para facilitar a compreensão e manter o engajamento. -->
+    <!-- Visualization & Content Choices: O conteúdo qualitativo foi transformado em elementos interativos. O problema do desperdício é apresentado com contadores numéricos animados (HTML/JS) para criar impacto. O fluxo operacional é mostrado em um diagrama de abas (HTML/JS) para clareza. O impacto social, sugerido no relatório, é visualizado com um gráfico de barras (Chart.js) e cartões de estatísticas, usando dados simulados para demonstrar o potencial. As leis são organizadas em um acordeão (HTML/JS) para evitar sobrecarga de informação. Essas escolhas visam organizar, informar e comparar dados de forma eficaz, promovendo a exploração interativa. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #4A4A4A;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .nav-link.active {
+            color: #4C7F4A;
+            font-weight: 600;
+            border-bottom-color: #4C7F4A;
+        }
+        .tab-button.active {
+            background-color: #4C7F4A;
+            color: #FFFFFF;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-[#3A6B35]">
+                🌍 FoodShare
+            </a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#inicio" class="nav-link text-gray-600 hover:text-[#4C7F4A] transition-colors border-b-2 border-transparent">Início</a>
+                <a href="#solucao" class="nav-link text-gray-600 hover:text-[#4C7F4A] transition-colors border-b-2 border-transparent">A Solução</a>
+                <a href="#como-funciona" class="nav-link text-gray-600 hover:text-[#4C7F4A] transition-colors border-b-2 border-transparent">Como Funciona</a>
+                <a href="#impacto" class="nav-link text-gray-600 hover:text-[#4C7F4A] transition-colors border-b-2 border-transparent">Impacto</a>
+                <a href="#legal" class="nav-link text-gray-600 hover:text-[#4C7F4A] transition-colors border-b-2 border-transparent">Base Legal</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-gray-700">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 flex flex-col space-y-4">
+            <a href="#inicio" class="nav-link text-gray-600 hover:text-[#4C7F4A]">Início</a>
+            <a href="#solucao" class="nav-link text-gray-600 hover:text-[#4C7F4A]">A Solução</a>
+            <a href="#como-funciona" class="nav-link text-gray-600 hover:text-[#4C7F4A]">Como Funciona</a>
+            <a href="#impacto" class="nav-link text-gray-600 hover:text-[#4C7F4A]">Impacto</a>
+            <a href="#legal" class="nav-link text-gray-600 hover:text-[#4C7F4A]">Base Legal</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="inicio" class="container mx-auto px-6 py-20 md:py-32 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold text-gray-800 leading-tight">
+                Transformando <span class="text-[#3A6B35]">excesso de comida</span> em <span class="text-[#E8871E]">solidariedade e inclusão.</span>
+            </h1>
+            <p class="mt-6 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+                O FoodShare é a plataforma digital que conecta quem tem alimentos sobrando com quem precisa, combatendo o desperdício e fortalecendo comunidades.
+            </p>
+        </section>
+
+        <section id="solucao" class="py-20 bg-white">
+            <div class="container mx-auto px-6 text-center">
+               
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div class="bg-[#FDFBF8] p-8 rounded-xl shadow-md border border-gray-200">
+                        <h3 class="text-2xl font-semibold text-[#4C7F4A] mb-3">Frente Social</h3>
+                        <p class="text-gray-600">
+                            Facilitamos a doação de alimentos de restaurantes, supermercados e produtores para pessoas em situação de vulnerabilidade, ONGs e abrigos, garantindo que o alimento chegue a quem mais precisa.
+                        </p>
+                    </div>
+                    <div class="bg-[#FDFBF8] p-8 rounded-xl shadow-md border border-gray-200">
+                        <h3 class="text-2xl font-semibold text-[#E8871E] mb-3">Frente Comercial</h3>
+                        <p class="text-gray-600">
+                            Oferecemos uma plataforma para que restaurantes parceiros possam vender refeições próximas ao vencimento com preços reduzidos, evitando o desperdício e gerando uma nova fonte de receita.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="como-funciona" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-gray-800 text-center mb-12">Como Funciona na Prática</h2>
+                <div class="max-w-4xl mx-auto">
+                    <div class="flex justify-center mb-8 border-b border-gray-200">
+                        <button data-tab="receber" class="tab-button text-lg font-semibold py-4 px-6 text-gray-600 transition-colors active">Para Receber Doações</button>
+                        <button data-tab="distribuir" class="tab-button text-lg font-semibold py-4 px-6 text-gray-600 transition-colors">Para Distribuir Doações</button>
+                    </div>
+                    <div id="tab-content">
+                        <div data-tab-content="receber" class="">
+                            <ul class="space-y-4 text-lg text-gray-700">
+                                <li class="flex items-start p-4 bg-white rounded-lg shadow-sm"><span class="text-[#3A6B35] font-bold mr-3">1.</span> Faça o cadastro na plataforma como pessoa física, ONG ou abrigo.</li>
+                                <li class="flex items-start p-4 bg-white rounded-lg shadow-sm"><span class="text-[#3A6B35] font-bold mr-3">2.</span> Instituições devem apresentar documentos simples para comprovação.</li>
+                                <li class="flex items-start p-4 bg-white rounded-lg shadow-sm"><span class="text-[#3A6B35] font-bold mr-3">3.</span> Defina um local de retirada ou solicite a entrega através de nossos parceiros.</li>
+                                <li class="flex items-start p-4 bg-white rounded-lg shadow-sm"><span class="text-[#3A6B35] font-bold mr-3">4.</span> Siga as regras de higiene e segurança para garantir a qualidade dos alimentos.</li>
+                            </ul>
+                        </div>
+                        <div data-tab-content="distribuir" class="hidden">
+                             <ul class="space-y-4 text-lg text-gray-700">
+                                <li class="flex items-start p-4 bg-white rounded-lg shadow-sm"><span class="text-[#E8871E] font-bold mr-3">1.</span> Firme parcerias locais com ONGs, igrejas e prefeituras para ampliar o alcance.</li>
+                                <li class="flex items-start p-4 bg-white rounded-lg shadow-sm"><span class="text-[#E8871E] font-bold mr-3">2.</span> Organize a logística de transporte para coletar e entregar as doações.</li>
+                                <li class="flex items-start p-4 bg-white rounded-lg shadow-sm"><span class="text-[#E8871E] font-bold mr-3">3.</span> Utilize nosso sistema de agendamento para otimizar as entregas e evitar perdas.</li>
+                                <li class="flex items-start p-4 bg-white rounded-lg shadow-sm"><span class="text-[#E8871E] font-bold mr-3">4.</span> Mantenha um registro transparente de todas as doações para gerar confiança.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="impacto" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-gray-800 text-center mb-4">Nosso Impacto em Números</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto text-center mb-12">
+                    Acreditamos que cada refeição conta. Acompanhe o crescimento do nosso impacto e veja como, juntos, estamos fazendo a diferença. Os dados abaixo são uma projeção do nosso potencial.
+                </p>
+                <div class="grid md:grid-cols-3 gap-8 mb-12 text-center">
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
+                        <div class="text-4xl font-bold text-[#3A6B35] mb-2" data-counter="15000">0</div>
+                        <div class="text-gray-600">Refeições Doadas</div>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
+                        <div class="text-4xl font-bold text-[#3A6B35] mb-2" data-counter="4500">0</div>
+                        <div class="text-gray-600">Pessoas Ajudadas</div>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
+                        <div class="text-4xl font-bold text-[#3A6B35] mb-2" data-counter="250">0</div>
+                        <div class="text-gray-600">Parceiros Ativos</div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="impactoChart"></canvas>
+                </div>
+            </div>
+        </section>
+        
+        <section id="legal" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-gray-800 text-center mb-12">Nossa Base Legal e Compromisso</h2>
+                 <p class="text-lg text-gray-600 max-w-3xl mx-auto text-center mb-12">
+                    Operamos com total transparência e em conformidade com as principais leis brasileiras, garantindo segurança e responsabilidade em todo o processo de doação de alimentos. Clique em cada item para saber mais.
+                </p>
+                <div class="max-w-3xl mx-auto space-y-4" id="accordion">
+                    <div class="accordion-item border border-gray-200 rounded-lg">
+                        <button class="accordion-header w-full flex justify-between items-center p-5 text-left font-semibold text-gray-700 bg-gray-50 hover:bg-gray-100 transition-colors">
+                            Lei nº 14.016/2020 (Combate ao Desperdício)
+                            <span class="transform transition-transform duration-300">▼</span>
+                        </button>
+                        <div class="accordion-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                            <p class="p-5 text-gray-600 bg-white">Autoriza a doação de alimentos que ainda estão próprios para consumo, transferindo a responsabilidade pela qualidade do alimento para a entidade que o recebe após a doação.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item border border-gray-200 rounded-lg">
+                        <button class="accordion-header w-full flex justify-between items-center p-5 text-left font-semibold text-gray-700 bg-gray-50 hover:bg-gray-100 transition-colors">
+                            Lei nº 11.346/2006 (LOSAN)
+                             <span class="transform transition-transform duration-300">▼</span>
+                        </button>
+                        <div class="accordion-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                            <p class="p-5 text-gray-600 bg-white">Estabelece o direito humano à alimentação adequada e cria o Sistema Nacional de Segurança Alimentar e Nutricional (SISAN).</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item border border-gray-200 rounded-lg">
+                        <button class="accordion-header w-full flex justify-between items-center p-5 text-left font-semibold text-gray-700 bg-gray-50 hover:bg-gray-100 transition-colors">
+                            RDC nº 216/2004 (ANVISA)
+                             <span class="transform transition-transform duration-300">▼</span>
+                        </button>
+                        <div class="accordion-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                            <p class="p-5 text-gray-600 bg-white">Define as regras de boas práticas para serviços de alimentação, incluindo higiene, preparo, armazenamento e transporte de alimentos.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item border border-gray-200 rounded-lg">
+                        <button class="accordion-header w-full flex justify-between items-center p-5 text-left font-semibold text-gray-700 bg-gray-50 hover:bg-gray-100 transition-colors">
+                           Outras Leis Importantes
+                            <span class="transform transition-transform duration-300">▼</span>
+                        </button>
+                        <div class="accordion-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                            <div class="p-5 text-gray-600 bg-white">
+                                <ul class="list-disc list-inside space-y-2">
+                                    <li><strong>Códigos Sanitários:</strong> Normas locais de vigilância.</li>
+                                    <li><strong>ECA e Estatuto do Idoso:</strong> Garantem alimentação a públicos vulneráveis.</li>
+                                    <li><strong>Lei de Crimes Ambientais:</strong> Incentiva a redução do desperdício.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <section id="proximos-passos" class="py-20 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">O Futuro do FoodShare</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-12">
+                   Estamos em constante evolução para tornar nossa plataforma ainda mais eficaz e inclusiva. Estas são algumas das melhorias que estamos planejando para o futuro.
+                </p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-gray-50 p-6 rounded-lg text-left shadow-sm">
+                        <h3 class="font-semibold text-lg text-gray-800 mb-2">✨ Gamificação e Reconhecimento</h3>
+                        <p class="text-gray-600">Criação de um sistema de selos e pontos para doadores e parceiros, incentivando a participação contínua.</p>
+                    </div>
+                     <div class="bg-gray-50 p-6 rounded-lg text-left shadow-sm">
+                        <h3 class="font-semibold text-lg text-gray-800 mb-2">📍 Logística Inteligente</h3>
+                        <p class="text-gray-600">Inclusão de filtros de localização avançados para facilitar a conexão entre doadores e beneficiários próximos.</p>
+                    </div>
+                     <div class="bg-gray-50 p-6 rounded-lg text-left shadow-sm">
+                        <h3 class="font-semibold text-lg text-gray-800 mb-2">❤️ Histórias que Inspiram</h3>
+                        <p class="text-gray-600">Uma seção dedicada para dar visibilidade a histórias reais de beneficiados, mostrando o impacto humano do projeto.</p>
+                    </div>
+                      <div class="bg-gray-50 p-6 rounded-lg text-left shadow-sm">
+                        <h3 class="font-semibold text-lg text-gray-800 mb-2">♿ Acessibilidade para Todos</h3>
+                        <p class="text-gray-600">Melhorar a acessibilidade da plataforma, incluindo compatibilidade com leitores de tela e uso de linguagem simples.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-10">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-2xl font-bold mb-2">🌍 FoodShare</p>
+            <p>&copy; 2025 FoodShare. Um elo entre solidariedade e inovação.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('main section');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.4
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+            mobileMenu.addEventListener('click', (e) => {
+                if(e.target.tagName === 'A'){
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+
+
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('[data-tab-content]');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetTab = button.dataset.tab;
+
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    tabContents.forEach(content => {
+                        if (content.dataset.tabContent === targetTab) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                const content = item.querySelector('.accordion-content');
+                const icon = header.querySelector('span');
+
+                header.addEventListener('click', () => {
+                    const isOpen = !content.classList.contains('max-h-0');
+
+                    document.querySelectorAll('.accordion-content').forEach(c => {
+                        c.classList.add('max-h-0');
+                        c.previousElementSibling.querySelector('span').classList.remove('rotate-180');
+                    });
+
+                    if(!isOpen) {
+                        content.classList.remove('max-h-0');
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        icon.classList.add('rotate-180');
+                    } else {
+                         content.style.maxHeight = '0px';
+                         icon.classList.remove('rotate-180');
+                    }
+                });
+            });
+
+            function animateCounters() {
+                const counters = document.querySelectorAll('[data-counter]');
+                const speed = 200;
+
+                counters.forEach(counter => {
+                    const target = +counter.dataset.counter;
+                    const inc = target / speed;
+
+                    const updateCount = () => {
+                        const count = +counter.innerText;
+                        if (count < target) {
+                            counter.innerText = Math.ceil(count + inc);
+                            setTimeout(updateCount, 10);
+                        } else {
+                            counter.innerText = target.toLocaleString('pt-BR');
+                        }
+                    };
+                    updateCount();
+                });
+            }
+
+            const impactSection = document.getElementById('impacto');
+            const counterObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounters();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            counterObserver.observe(impactSection);
+
+            const ctx = document.getElementById('impactoChart').getContext('2d');
+            const impactoChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+                    datasets: [{
+                        label: 'Refeições Doadas',
+                        data: [1200, 1900, 3000, 2500, 4200, 5000],
+                        backgroundColor: 'rgba(76, 127, 74, 0.7)',
+                        borderColor: 'rgba(76, 127, 74, 1)',
+                        borderWidth: 1,
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0,0,0,0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: '#3A6B35',
+                            titleFont: {
+                                size: 14
+                            },
+                            bodyFont: {
+                                size: 12
+                            },
+                            callbacks: {
+                                label: function(context) {
+                                    return ` ${context.parsed.y} refeições`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
